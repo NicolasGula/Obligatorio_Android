@@ -1,0 +1,20 @@
+{
+  "name": "obligatorio_android",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/android": "^4.0.1",
+    "@capacitor/app": "^4.0.1",
+    "@capacitor/core": "^4.0.1",
+    "@capacitor/network": "^4.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^4.0.1"
+  }
+}

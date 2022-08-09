@@ -1,0 +1,382 @@
+<html lang="en">
+  
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto</title>
+    <!-- Ionic lib -->
+    <script
+      type="module"
+      src="https://unpkg.com/@ionic/core@6.0.2//dist/ionic/ionic.esm.js"
+    ></script>
+    <!-- Ionic lib fallback for older browsers -->
+    <script
+      nomodule
+      src="https://unpkg.com/@ionic/core@6.0.2//dist/ionic/ionic.js"
+    ></script>
+    <!-- Ionic Styles-->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@ionic/core@latest/css/ionic.bundle.css"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <!-- Leaflet css -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+   integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+   crossorigin=""/>
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+ integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+ crossorigin=""></script>
+    <!-- Ion Menu -->
+    <script type="module">
+      // TOAST
+      import { toastController } from "https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js";
+      window.toastController = toastController;
+      // MENU
+      import { menuController } from "https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js";
+      window.menuController = menuController;
+      //LOADING
+      import { loadingController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+      window.loadingController = loadingController;
+      //ALERT
+      import { alertController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+        window.alertController = alertController;
+    </script>
+
+    <script src="capacitor.js"></script>
+    <script src="js/app.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-router>
+        <ion-route url="/signup" component="signup-page"></ion-route>
+        <ion-route url="/coins" component="coins-page"></ion-route>
+        <ion-route url="/detailcoin" component="detail-coin-page"></ion-route>
+        <ion-route url="/" component="login-page"></ion-route>
+        <ion-route url="/transactions" component="transactions-page"></ion-route>
+        <ion-route url="/investbycurrency" component="invest-by-currency-page"></ion-route>
+        <ion-route url="/totalinvest" component="total-invest-page"></ion-route>
+        <ion-route url="/map" component="map-page"></ion-route>
+      </ion-router>
+      <ion-nav root="login-page"></ion-nav>
+      <!-- MENU -->
+      <ion-menu side="start" content-id="main" id="menu_lateral">
+        <!-- Header Menu -->
+        <ion-header>
+          <ion-toolbar color="warning">
+            <ion-title color="dark" class="ion-text-center">MENU</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <!-- Menu content -->
+        <ion-content>
+          <ion-list>
+            <ion-item lines="none">
+              <img src="img/img_3.jpg">
+            </ion-item>
+            <ion-item>
+              <img src="img/cryptocurrency.png" slot="start" width="30px" height="30px">
+              <ion-router-link href="/coins" color="dark">MONEDAS</ion-router-link>
+            </ion-item>
+            <ion-item>
+              <img src="img/money-exchange.png" slot="start" width="30px" height="30px">
+              <ion-router-link href="/transactions" color="dark">TRANSACCIONES</ion-router-link>
+            </ion-item>
+            <ion-item>
+              <img src="img/cryptocurrency (1).png" slot="start" width="30px" height="30px">
+              <ion-router-link href="/investbycurrency" color="dark">INVERSIONES POR MONEDA</ion-router-link>
+            </ion-item>
+            <ion-item>
+              <img src="img/stake.png" slot="start" width="30px" height="30px">
+              <ion-router-link href="/totalinvest" color="dark">INVERSION TOTAL</ion-router-link>
+            </ion-item>
+            <ion-item>
+              <img src="img/map.png" slot="start" width="30px" height="30px">
+              <ion-router-link href="/map" color="dark">MAPA</ion-router-link>
+            </ion-item>
+            <ion-item id="logout">
+              <img src="img/left-arrow.png" slot="start" width="25px" height="25px" >
+              CERRAR SESION
+            </ion-item>
+            <ion-item id="close_app">
+              <img src="img/cancel.png" slot="start" width="25px" height="25px" >
+              CERRAR APP
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+      <div id="main"></div>
+      <!-- LOGIN -->
+      <ion-page class="ion-page" id="login-page">
+        <!-- Header -->
+        <ion-header>
+          <ion-toolbar>
+            <ion-title class="ion-text-center">CRYPTORT</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <!-- Content -->
+        <ion-content class="ion-padding">
+          <div class="ion-text-center">
+            <img src="img/img_1.png" />
+          </div> 
+          <h1 class="ion-text-center">LOGIN</h1>
+          <ion-item>
+            <ion-label position="floating">Usuario</ion-label>
+            <ion-input placeholder="Ingrese Usuario" id="input_user"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input type="password" placeholder="Ingrese Password" id="input_password"></ion-input>
+          </ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-button expand="block" id="btn_login" color="warning">LOGIN</ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12" class="ion-text-center">No tienes cuenta?
+                <ion-router-link href="/signup">Registrate aqu&iacute;</ion-router-link>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-content>
+      </ion-page>
+      <!-- SIGN UP -->
+      <ion-page class="ion-page" id="signup-page">
+        <!-- Header -->
+        <ion-header>
+          <ion-toolbar>
+            <ion-title class="ion-text-center">CRYPTORT</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <!-- Content -->
+        <ion-content class="ion-padding">
+          <div class="ion-text-center">
+            <img src="img/img_2.png" width="150px" height="150px" />
+          </div> 
+          <h1 class="ion-text-center">SIGN UP</h1>
+          <ion-item>
+            <ion-label position="floating">Usuario</ion-label>
+            <ion-input placeholder="Ingrese Usuario" id="input_user_signup"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Departamento</ion-label>
+            <ion-select interface="popover" id="select_departments">
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Ciudad</ion-label>
+            <ion-select id="select_citys"></ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input type="password" placeholder="Ingrese Password" id="input_password_signup"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Repetir Password</ion-label>
+            <ion-input type="password" placeholder="Ingrese repetici&oacute;n" id="input_repassword_signup"></ion-input>
+        </ion-item>
+          <ion-grid class="ion-text-center">
+            <ion-row>
+                <ion-col size="12">
+                    <ion-button color="warning" expand="block" id="btn_signup">Registrarse</ion-button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12">
+                    Ya tienes cuenta? <ion-router-link href="/" class="underline">Ingresar aqu&iacute;
+                    </ion-router-link>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        </ion-content>
+      </ion-page>
+      <!-- COINS -->
+      <ion-page class="ion-page" id="coins-page">
+        <!-- Header -->
+        <ion-header>
+          <ion-toolbar color="warning">
+              <!-- Hamburger Menu -->
+            <ion-buttons slot="start">
+              <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title color="dark">CRYPTORT</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <!-- Content -->
+        <ion-content class="ion-padding">
+          <ion-list id="list_coins"></ion-list>
+        </ion-content>
+      </ion-page>
+      <!-- DETAIL COIN -->
+      <ion-page class="ion-page" id="detail-coin-page">
+        <!-- Header -->
+        <ion-header>
+          <ion-toolbar color="warning">
+            <ion-buttons slot="start">
+              <ion-router-link href="/coins" class="ion-padding" color="dark"><img src="img/arrow.png" width="25px" height="25px"></ion-router-link>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <!-- Content -->
+        <ion-content class="ion-padding">
+          <ion-card id="coin_card" class="ion-text-center">
+          </ion-card>
+          <!-- Transaccion a realizar -->
+          <ion-title class="ion-text-center ion-padding">OPERAR</ion-title>
+          <ion-item>
+            <ion-label position="floating">Tipo Operacion</ion-label>
+            <ion-select id="type_transaction">
+              <ion-select-option value="1">Compra</ion-select-option>
+              <ion-select-option value="2">Venta</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Cantidad</ion-label>
+            <ion-input type="number" placeholder="Ingrese Cantidad" id="input_quantity"></ion-input>
+          </ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-button expand="block" id="btn_operation" color="warning">Realizar transaccion</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-content>
+      </ion-page>
+      <!-- TRANSACTIONS -->
+      <ion-page class="ion-page" id="transactions-page">
+        <!-- Header -->
+        <ion-header>
+          <ion-toolbar color="warning">
+             <!-- Hamburger Menu -->
+             <ion-buttons slot="start">
+              <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>CRYPTORT</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <!-- Content -->
+        <ion-content class="ion-padding">
+          <!-- Select Cryptos -->
+          <ion-item>
+            <ion-label position="floating">SELECCIONAR CRYPTO</ion-label>
+            <ion-select interface="popover" id="select_cryptos"></ion-select>
+          </ion-item>
+          <ion-list id="list_transactions"></ion-list>
+        </ion-content>
+      </ion-page>
+      <!-- INVEST BY CURRENCY -->
+      <ion-page class="ion-page" id="invest-by-currency-page">
+        <!-- Header -->
+          <ion-header>
+               <ion-toolbar color="warning">
+                 <!-- Hamburger Menu -->
+                 <ion-buttons slot="start">
+                   <ion-menu-button></ion-menu-button>
+                 </ion-buttons>
+                 <ion-title>CRYPTORT</ion-title>
+               </ion-toolbar>
+             </ion-header>
+             <ion-content class="ion-padding">
+              <ion-list id="amount_currency_by_coin"></ion-list>
+             </ion-content>
+      </ion-page>
+      <!-- TOTAL INVEST -->
+      <ion-page class="ion-page" id="total-invest-page">
+        <ion-header>
+          <ion-toolbar color="warning">
+            <!-- Hamburger Menu -->
+            <ion-buttons slot="start">
+              <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>CRYPTORT</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-card>
+            <ion-card-header >
+              <ion-card-title class="ion-text-center">
+                DOLAR HOY
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">
+            <ion-text color="primary">
+            <h1 id="dolar_today"></h1>
+            </ion-text>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title class="ion-text-center">
+                COMPRAS TOTALES
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">
+            <ion-text color="success">
+            <h1 id="total_purchases"></h1>
+            </ion-text>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title class="ion-text-center">
+                VENTAS TOTALES
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">
+            <ion-text color="danger">
+            <h1 id="total_sales"></h1>
+            </ion-text>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title class="ion-text-center">
+                INVERSION TOTAL
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">
+            <ion-text color="primary">
+            <h1 id="total_invest"></h1>
+            </ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-content>
+      </ion-page>
+      <!-- MAP -->
+      <ion-page class="ion-page" id="map-page">
+        <!-- Header -->
+        <ion-header>
+          <ion-toolbar color="warning">
+            <!-- Hamburger Menu -->
+            <ion-buttons slot="start">
+              <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>CRYPTORT</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <!-- Content -->
+        <ion-content>
+          
+            <div id="map"></div>
+          
+        </ion-content>
+      </ion-page>
+    </ion-app>
+  </body>
+</html>
